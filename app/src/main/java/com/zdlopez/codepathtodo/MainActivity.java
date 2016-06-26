@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,18 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
-            // TODO Auto-generated method stub
-//            TextView listText = (TextView) view.findViewById(R.id.listText);
-//            String text = listText.getText().toString();
-
+            Log.d("the selection is ", items.get(pos));
             // create intent to start another activity
             //Intent intent = new Intent(MainActivity.this, SecondActivity.class);
             // add the selected text item to our intent.
             //intent.putExtra("selected-item", text);
             //startActivity(intent);
-            items.remove(pos);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+
         }
 
     }
