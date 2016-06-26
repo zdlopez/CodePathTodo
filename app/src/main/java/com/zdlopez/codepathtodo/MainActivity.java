@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
+
+    private final int REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             editIntent.putExtra("task", selectedTask);
             editIntent.putExtra("position", position);
             Log.d("what is position", Integer.toString(position));
-            startActivity(editIntent);
+            startActivityForResult(editIntent, REQUEST_CODE);
         }
 
     }
@@ -95,6 +98,19 @@ public class MainActivity extends AppCompatActivity {
             FileUtils.writeLines(todoFile, items);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            String newText = data.getExtras().getString("task");
+            int position = data.getExtras().getInt("position", 0);
+
+            items.set(position, newText);
+            itemsAdapter.notifyDataSetChanged();
+            writeItems();
         }
     }
 }

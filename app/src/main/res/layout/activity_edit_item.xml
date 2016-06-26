@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/editButton"
+        android:onClick="onSubmit"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="108dp" />
 
