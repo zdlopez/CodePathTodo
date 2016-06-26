@@ -67,13 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
-            Log.d("the selection is ", items.get(pos));
-            // create intent to start another activity
-            //Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-            // add the selected text item to our intent.
-            //intent.putExtra("selected-item", text);
-            //startActivity(intent);
-
+            String selectedTask = items.get(pos);
+            Log.d("the selection is ", selectedTask);
+            Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
+            editIntent.putExtra("task", selectedTask);
+            startActivity(editIntent);
         }
 
     }
