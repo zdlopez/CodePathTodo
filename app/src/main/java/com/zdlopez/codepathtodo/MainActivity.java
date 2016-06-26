@@ -66,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
     public class ListClickHandler implements AdapterView.OnItemClickListener{
 
         @Override
-        public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
-            String selectedTask = items.get(pos);
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+            String selectedTask = items.get(position);
             Log.d("the selection is ", selectedTask);
             Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
             editIntent.putExtra("task", selectedTask);
+            editIntent.putExtra("position", position);
+            Log.d("what is position", Integer.toString(position));
             startActivity(editIntent);
         }
 
