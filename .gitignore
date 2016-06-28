@@ -44,3 +44,7 @@ build/
 
 # OS-specific files
 .DS_Store
+
+# other files
+
+*.ignore

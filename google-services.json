@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "358268120732",
+    "project_id": "codepathtodo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358268120732:android:df1ec3188066bab5",
+        "android_client_info": {
+          "package_name": "com.zdlopez.codepathtodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358268120732-6e5e7uquu4nd6m554dk1sl2bqq5dbadp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zdlopez.codepathtodo",
+            "certificate_hash": "91961CD22930E018122BA8AA3D332FB859981540"
+          }
+        },
+        {
+          "client_id": "358268120732-raa6e7387bn1c365h5fsv9eq5uqiaaj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWbj1JXhVrwDSqgAOHQOQvZkNwt43-hB4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
