@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         writeItems();
     }
 
+    public void onClickSettings(View v) {
+        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivityForResult(settingsIntent, REQUEST_CODE);
+    }
+
     public void setupListViewListener() {
         lvItems.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
