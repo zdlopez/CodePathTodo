@@ -40,5 +40,37 @@ public class Todo {
         this.status = status;
     }
 
-    
+
+    //getters and setters
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Calendar getDueDate() {
+        return this.dueDate;
+    }
+
+    public void setDueDate(Calendar dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Integer getPriority() {
+        return this.priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 }

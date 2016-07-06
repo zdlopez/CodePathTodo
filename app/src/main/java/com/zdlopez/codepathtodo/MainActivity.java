@@ -1,5 +1,6 @@
 package com.zdlopez.codepathtodo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +21,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String> items;
+    ArrayList<Todo> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
 
@@ -34,12 +39,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lvItems = (ListView) findViewById(R.id.lvItems);
-        items = new ArrayList<>();
+
+        // Construct the data source
+        items = new ArrayList<Todo>();
         readItems();
-        itemsAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+        // Create the adapter to convert the array to views
+        TodosAdapter adapter = new TodosAdapter(this, items);
+        // Attach the adapter to a ListView
+        lvItems = (ListView) findViewById(R.id.lvItems);
+        lvItems.setAdapter(adapter);
+
+
+//        lvItems = (ListView) findViewById(R.id.lvItems);
+//        items = new ArrayList<>();
+//        readItems();
+//        itemsAdapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1, items);
+//        lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
         lvItems.setOnItemClickListener(new ListClickHandler());
     }
@@ -70,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-            String selectedTask = items.get(position);
-            Log.d("the selection is ", selectedTask);
+            Todo selectedTask = items.get(position);
+            Log.d("the selection is ", selectedTask.getName());
             Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
             editIntent.putExtra("task", selectedTask);
             editIntent.putExtra("position", position);
@@ -82,20 +98,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
+        FileInputStream fis = context.openFileInput("todos.txt");
+        ObjectInputStream is = new ObjectInputStream(fis);
+
         try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+            items = (ArrayList<Todo>) is.readObject();
+            is.close();
+            fis.close();
         } catch (IOException e) {
-            items = new ArrayList<String>();
+            items = new ArrayList<Todo>();
         }
     }
 
     private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
+        FileOutputStream fos = context.openFileOutput("todos.txt", Context.MODE_PRIVATE);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+
+
+
+
+
+//        File filesDir = getFilesDir();
+//        File todoFile = new File(filesDir, "todos.txt");
         try {
-            FileUtils.writeLines(todoFile, items);
+//            for (Todo one: items) {
+//                os.writeObject(this);
+//            }
+            os.writeObject(items);
+            os.close();
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
