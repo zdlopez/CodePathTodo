@@ -32,7 +32,7 @@ public class TodosAdapter extends ArrayAdapter<Todo> {
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
         // Populate the data into the template view using the data object
         tvName.setText(todo.getName());
-        tvDate.setText("blah");
+        tvDate.setText(todo.getDueDateFormated());
         // Return the completed view to render on screen
         return convertView;
     }

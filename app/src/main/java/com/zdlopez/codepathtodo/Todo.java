@@ -1,7 +1,10 @@
 package com.zdlopez.codepathtodo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+
 /**
  * Created by ZachLopez on 7/6/16.
  */
@@ -60,6 +63,15 @@ public class Todo implements Serializable {
 
     public Calendar getDueDate() {
         return this.dueDate;
+    }
+
+    public String getDueDateFormated() {
+        String strdate = "n/a";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        if (this.dueDate != null) {
+            strdate = sdf.format(this.dueDate.getTime());
+        }
+        return strdate;
     }
 
     public void setDueDate(Calendar dueDate) {
