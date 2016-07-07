@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.view.View.OnClickListener;
+import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.Calendar;
 
@@ -20,8 +24,10 @@ public class EditItemActivity extends AppCompatActivity {
     EditText editDate;
     Integer position;
     Todo editText;
+    Spinner spinner;
 
     private DatePickerDialog dateDialog;
+    private static final String[] PRIORITY_STRINGS = {"Low", "Medium", "High"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,24 @@ public class EditItemActivity extends AppCompatActivity {
             }
         });
 
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, PRIORITY_STRINGS);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+                editText.setPriority(spinner.getSelectedItemPosition());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
 
     public void onSubmit(View v) {

@@ -15,6 +15,7 @@ public class Todo implements Serializable {
     private static final Integer HIGH = 2;
     private static final Integer MEDIUM = 1;
     private static final Integer LOW = 0;
+    public static final String[] PRIORITY_TEXT= {"Low", "Medium", "High"};
 
     private static final String COMPLETE = "Complete";
     private static final String INCOMPLETE = "Incomplete";
@@ -80,6 +81,10 @@ public class Todo implements Serializable {
 
     public Integer getPriority() {
         return this.priority;
+    }
+
+    public String getPriorityString() {
+        return PRIORITY_TEXT[this.priority];
     }
 
     public void setPriority(Integer priority) {

@@ -29,9 +29,11 @@ public class TodosAdapter extends ArrayAdapter<Todo> {
         }
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        TextView tvPriority = (TextView) convertView.findViewById(R.id.tvPriority);
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
         // Populate the data into the template view using the data object
         tvName.setText(todo.getName());
+        tvPriority.setText(todo.getPriorityString());
         tvDate.setText(todo.getDueDateFormated());
         // Return the completed view to render on screen
         return convertView;
