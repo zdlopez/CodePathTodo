@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Created by ZachLopez on 7/6/16.
  */
-public class Todo {
+public class Todo implements Serializable {
 
     // private vars for priority and status
     // set priority to ints for possible sorting later

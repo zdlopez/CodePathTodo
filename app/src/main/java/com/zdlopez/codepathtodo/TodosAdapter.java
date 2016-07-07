@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class TodosAdapter extends ArrayAdapter<Todo> {
     public TodosAdapter(Context context, ArrayList<Todo> todos) {
-        super(context, 0, users);
+        super(context, 0, todos);
     }
 
     @Override

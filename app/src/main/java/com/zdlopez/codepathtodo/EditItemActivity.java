@@ -10,24 +10,27 @@ import android.widget.EditText;
 public class EditItemActivity extends AppCompatActivity {
     EditText editTask;
     Integer position;
+    Todo editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
-        String editText = getIntent().getStringExtra("task");
+        editText = (Todo) getIntent().getSerializableExtra("task");
         position = getIntent().getIntExtra("position", 0);
         Log.d("edit view", Integer.toString(position));
         editTask = (EditText) findViewById(R.id.editTask);
-        editTask.setText(editText);
-        editTask.setSelection(editText.length());
+        editTask.setText(editText.getName());
+        editTask.setSelection(editText.getName().length());
     }
 
     public void onSubmit(View v) {
         Intent data = new Intent();
         // Pass relevant data back as a result
-        data.putExtra("task", editTask.getText().toString());
+        editText.setName(editTask.getText().toString());
+        data.putExtra("task", editText);
+//        data.putExtra("task", editTask.getText().toString());
         data.putExtra("position", position);
         data.putExtra("code", 201); // ints work too
         // Activity finished ok, return the data

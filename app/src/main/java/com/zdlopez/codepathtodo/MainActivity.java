@@ -27,27 +27,30 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Todo> items;
-    ArrayAdapter<String> itemsAdapter;
+    TodosAdapter itemsAdapter;
     ListView lvItems;
 
     private final int REQUEST_CODE = 200;
+
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Todo mytodo = new Todo();
         // Construct the data source
         items = new ArrayList<Todo>();
-        readItems();
+        //readItems();
         // Create the adapter to convert the array to views
-        TodosAdapter adapter = new TodosAdapter(this, items);
+        itemsAdapter = new TodosAdapter(this, items);
         // Attach the adapter to a ListView
         lvItems = (ListView) findViewById(R.id.lvItems);
-        lvItems.setAdapter(adapter);
+        lvItems.setAdapter(itemsAdapter);
 
 
 //        lvItems = (ListView) findViewById(R.id.lvItems);
@@ -63,9 +66,13 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+        //Log.d("blah", "what");
+        Todo myTodo = new Todo();
+        myTodo.setName(itemText);
+        items.add(myTodo);
+        itemsAdapter.notifyDataSetChanged();
         etNewItem.setText("");
-        writeItems();
+       // writeItems();
     }
 
     public void setupListViewListener() {
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                                    View item, int pos, long id) {
                         items.remove(pos);
                         itemsAdapter.notifyDataSetChanged();
-                        writeItems();
+                       // writeItems();
                         return true;
                     }
                 });
@@ -96,52 +103,53 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    private void readItems() {
-        FileInputStream fis = context.openFileInput("todos.txt");
-        ObjectInputStream is = new ObjectInputStream(fis);
-
-        try {
-            items = (ArrayList<Todo>) is.readObject();
-            is.close();
-            fis.close();
-        } catch (IOException e) {
-            items = new ArrayList<Todo>();
-        }
-    }
-
-    private void writeItems() {
-        FileOutputStream fos = context.openFileOutput("todos.txt", Context.MODE_PRIVATE);
-        ObjectOutputStream os = new ObjectOutputStream(fos);
-
-
-
-
-
-//        File filesDir = getFilesDir();
-//        File todoFile = new File(filesDir, "todos.txt");
-        try {
-//            for (Todo one: items) {
-//                os.writeObject(this);
-//            }
-            os.writeObject(items);
-            os.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    private void readItems() {
+//
+//
+//        try {
+//            FileInputStream fis = context.openFileInput("todos.txt");
+//            ObjectInputStream is = new ObjectInputStream(fis);
+//            items = (ArrayList<Todo>) is.readObject();
+//            is.close();
+//            fis.close();
+//        } catch (IOException e) {
+//            items = new ArrayList<Todo>();
+//        }
+//    }
+//
+//    private void writeItems() {
+//        FileOutputStream fos = context.openFileOutput("todos.txt", Context.MODE_PRIVATE);
+//        ObjectOutputStream os = new ObjectOutputStream(fos);
+//
+//
+//
+//
+//
+////        File filesDir = getFilesDir();
+////        File todoFile = new File(filesDir, "todos.txt");
+//        try {
+////            for (Todo one: items) {
+////                os.writeObject(this);
+////            }
+//            os.writeObject(items);
+//            os.close();
+//            fos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            String newText = data.getExtras().getString("task");
+            Todo newText = (Todo) data.getSerializableExtra("task");
             int position = data.getExtras().getInt("position", 0);
 
             items.set(position, newText);
             itemsAdapter.notifyDataSetChanged();
-            writeItems();
+            //writeItems();
         }
     }
 }
