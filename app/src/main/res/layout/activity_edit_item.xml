@@ -40,4 +40,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/editTask"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp" />
+
 </RelativeLayout>

@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
+
 import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
         //readItems();
         // Create the adapter to convert the array to views
         itemsAdapter = new TodosAdapter(this, items);
+        itemsAdapter.sort(new Comparator<Todo>() {
+            public int compare(Todo arg0, Todo arg1) {
+                long time1 = arg0.getDueDate().getTimeInMillis();
+                long time2 = arg1.getDueDate().getTimeInMillis();
+                if (time1 >= time2) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
         // Attach the adapter to a ListView
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(itemsAdapter);
